@@ -37,7 +37,7 @@ class BH1750():
 
     def reset(self):
         """Reset sensor, turn on first if required."""
-        self.on()
+        self.on() 
         self.set_mode(self.RESET)
 
     def set_mode(self, mode):
@@ -59,4 +59,4 @@ class BH1750():
         factor = 2.0 if mode in (0x11, 0x21) else 1.0
         return (data[0]<<8 | data[1]) / (1.2 * factor)
     
-i2c = SoftI2C(scl=Pin(5), sda=Pin(4), freq=400000)   jyfhgfhgm
+i2c = SoftI2C(scl=Pin(5), sda=Pin(4), freq=400000)   
