@@ -10,11 +10,11 @@ import machine
 import rp2
 import sys
 
-# ─── WiFi Config ───────────────────────────────────────────
+
 ssid = 'wifirpi'
 password = '88E4VB1YQBI15TM4UCK9KP1LWQ'
 
-# ─── BH1750 Class ──────────────────────────────────────────
+
 class BH1750:
     """Class for the BH1750 digital Ambient Light Sensor"""
     MEASUREMENT_MODE_CONTINUOUSLY = const(1)
@@ -103,7 +103,7 @@ class BH1750:
                 sleep_ms(math.ceil(base_measurement_time * self._measurement_time / BH1750.MEASUREMENT_TIME_DEFAULT))
                 
 
-# WiFi Connect 
+
 def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
@@ -124,7 +124,7 @@ def connect():
 
 ip = connect()
 
-# Init I2C + sensor
+
 i2c = I2C(0, sda=Pin(8), scl=Pin(9), freq=400000)
 devices = i2c.scan()
 
@@ -135,13 +135,13 @@ if not devices:
 sensor = BH1750(devices[0], i2c)
 print("BH1750 ready. Sending data...\n")
 
-# 1. ADD THIS LINE: Tell the Pico your LED is on GP15
+
 external_led = Pin(15, Pin.OUT)
 
 while True:
     if rp2.bootsel_button() == 1:
         pico_led.off()
-        external_led.value(0) # Turn off the LED when we quit
+        external_led.value(0) 
         print('ByBye')
         sys.exit()
 
@@ -149,13 +149,13 @@ while True:
         lux = sensor.measurement
         print(f"Ambient Light: {lux:.2f} lux")
 
-        # 2. ADD THIS BLOCK: The logic to turn the LED on/off
+       
         if lux < 50:
-            external_led.value(1)  # Turn LED ON
+            external_led.value(1) 
         else:
-            external_led.value(0)  # Turn LED OFF
+            external_led.value(0)  
 
-        # Send data to your PHP server (Keep your correct IP here!)
+       
         ip = "193.48.125.209" 
         url = f"http://{ip}/TPcapteur/ProjetCapteurBH/api.php?valeur=" + str(round(lux, 2))
         
