@@ -103,7 +103,7 @@ class BH1750:
                 sleep_ms(math.ceil(base_measurement_time * self._measurement_time / BH1750.MEASUREMENT_TIME_DEFAULT))
                 
 
-# ─── WiFi Connect ───────────────────────────────────────────
+# WiFi Connect 
 def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
@@ -118,10 +118,10 @@ def connect():
         time.sleep(0.5)
     ip = wlan.ifconfig()[0]
     print(f'Connected on {ip}')
-    pico_led.on()
+    #pico_led.on()
     return ip
 
-# ─── Main ───────────────────────────────────────────────────
+
 ip = connect()
 
 # Init I2C + sensor
@@ -134,11 +134,14 @@ if not devices:
 
 sensor = BH1750(devices[0], i2c)
 print("BH1750 ready. Sending data...\n")
-# --- Clean the bottom of your code back to this: ---
+
+# 1. ADD THIS LINE: Tell the Pico your LED is on GP15
+external_led = Pin(15, Pin.OUT)
 
 while True:
     if rp2.bootsel_button() == 1:
         pico_led.off()
+        external_led.value(0) # Turn off the LED when we quit
         print('ByBye')
         sys.exit()
 
@@ -146,12 +149,16 @@ while True:
         lux = sensor.measurement
         print(f"Ambient Light: {lux:.2f} lux")
 
-        # REPLACE THE IP BELOW WITH YOUR LAPTOP'S NEW 192.168.118.XXX IP
-        laptop_ip = "192.168.118.100" 
+        # 2. ADD THIS BLOCK: The logic to turn the LED on/off
+        if lux < 50:
+            external_led.value(1)  # Turn LED ON
+        else:
+            external_led.value(0)  # Turn LED OFF
+
+        # Send data to your PHP server (Keep your correct IP here!)
+        ip = "193.48.125.209" 
+        url = f"http://{ip}/TPcapteur/ProjetCapteurBH/api.php?valeur=" + str(round(lux, 2))
         
-        url = f"http://{laptop_ip}/TPcapteur/ProjetCapteurBH/api.php?valeur=" + str(round(lux, 2))
-        
-        # We can safely use urequests again!
         response = urequests.get(url)
         print(f"Server response: {response.status_code} - {response.content.decode('utf-8')}")
         response.close()
@@ -160,3 +167,13 @@ while True:
         print(f"Error: {e}")
 
     time.sleep(2)
+
+
+    
+"""
+ if lux<=100.0:
+            pico_led.on()
+        else:
+            pico_led.off()
+     
+"""
