@@ -1,5 +1,5 @@
 <?php
-// api.php - Only used by the Pico
+
 
 try {
     $dbh = new PDO('mysql:dbname=capteurbh1750;host=localhost;charset=utf8', 'root', '');
