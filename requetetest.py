@@ -168,12 +168,3 @@ while True:
 
     time.sleep(2)
 
-
-    
-"""
- if lux<=100.0:
-            pico_led.on()
-        else:
-            pico_led.off()
-     
-"""
