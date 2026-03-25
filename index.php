@@ -32,7 +32,6 @@
        
         if ($readings) {
             
-          
             $temps = [];
             $valeurs = [];
 
@@ -75,13 +74,17 @@
             y: abbsiceY,
             type: 'scatter',
             mode: 'lines+markers',
-            line: { color: 'red', width: 3 }
+            line: { color: 'red', width: 5 }
         }];
 
         const layout = {
             title: 'Luminosité (Lux) en temps réel',
             xaxis: { title: 'Heure' },
-            yaxis: { title: 'Valeur Lux' }
+            yaxis: { 
+                title: 'Valeur Lux' ,
+                range : [0,200]
+            }
+            
         };
 
         Plotly.newPlot('luxGraph', data, layout);
