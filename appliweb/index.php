@@ -47,6 +47,7 @@
             echo "<ul>";
             foreach ($readings2 as $row2) {
                 echo "<li>" . $row2['recorded_at'] . " - <strong>" . $row2['lux'] . " Lux</strong></li>";
+                
 
                 if ( $row2['lux'] < 50 ){
                     echo "Etat de led extérieure : <strong style='color:green;'> allumée </strong><br><br>";
@@ -54,6 +55,33 @@
                     echo "Etat de led extérieure : <strong style='color:red;'> éteinte </strong><br><br>";
                 }
             }
+
+        $val = array_column($readings, 'lux');
+        $datss= array_column($readings, 'recorded_at');
+
+        $maxi=max($val);
+        $indice_de_max = array_search($maxi, $val);
+        $date_max = $readings[$indice_de_max]['recorded_at'];
+
+        $mini=min($val);
+        $indice_de_min = array_search($mini, $val);
+        $date_min = $readings[$indice_de_min]['recorded_at'];
+        
+        $moy= array_sum($val) / count($val);
+
+        $prem=reset($datss);
+        $h1=date('H:i:s',strtotime($prem));
+
+        $dernier=end($datss);
+        $h2=date('H:i:s',strtotime($dernier));
+
+
+        echo "Valeur maximale sur les 20 dernieres mesures <strong> ".$maxi."</strong>"." enregistré à: "."<strong> ".$date_max."</strong>"."<br/>";
+        echo "Valeur minimale sur les 20 dernieres mesures <strong> ".$mini."</strong>"." enregistré à: "."<strong> ".$date_min."</strong>"."<br/>";
+        echo "Valeur moyenne sur les 20 dernieres mesures <strong> ".$moy."</strong>"." enregistré entre: "."<strong>".$h2."</strong>"." et "."<strong>".$h1."</strong>" ."<br/>";
+
+
+            
             echo "</ul>";
 
          
@@ -68,6 +96,8 @@
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
     }
+
+
     ?>
 
     <script>
@@ -97,5 +127,6 @@
     </script>
 
 </body>
+
 </html>
 
