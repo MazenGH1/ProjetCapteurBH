@@ -1,7 +1,8 @@
+# https://github.com/flrrth/pico-bh1750
 
 import math
 import time
-from machine import I2C, Pin 
+from machine import I2C, Pin  # <-- This is the missing line that fixes your error!
 from micropython import const
 from utime import sleep_ms
 import network

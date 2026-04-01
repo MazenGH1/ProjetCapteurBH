@@ -82,7 +82,7 @@
             xaxis: { title: 'Heure' },
             yaxis: { 
                 title: 'Valeur Lux' ,
-                range : [0,200]
+                range : [0,300]
             }
             
         };
@@ -92,3 +92,4 @@
 
 </body>
 </html>
+

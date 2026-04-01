@@ -157,7 +157,7 @@ while True:
 
        
         ip = "193.48.125.209" 
-        url = f"http://{ip}/TPcapteur/ProjetCapteurBH/api.php?valeur=" + str(round(lux, 2))
+        url = f"http://{ip}/TPcapteur/ProjetCapteurBH/appliweb/api.php?valeur=" + str(round(lux, 2))
         
         response = urequests.get(url)
         print(f"Server response: {response.status_code} - {response.content.decode('utf-8')}")
@@ -168,3 +168,12 @@ while True:
 
     time.sleep(2)
 
+
+    
+"""
+ if lux<=100.0:
+            pico_led.on()
+        else:
+            pico_led.off()
+     
+"""
