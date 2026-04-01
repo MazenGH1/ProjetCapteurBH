@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta http-equiv="refresh" content="5"/>
     <title>Capteur de Lumiere</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/lightbulb_icon_188087.png">
+    <link rel="icon" type="image/png" href="../images/lightbulb_icon_188087.png">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
 </head>
 <body>
