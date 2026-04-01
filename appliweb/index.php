@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -9,12 +9,18 @@
     <link rel="icon" type="image/png" href="../images/lightbulb_icon_188087.png">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
 </head>
+
+<header>
+<br>
+<h1>Application pour un capteur de Luminosité jjjj</h1>
+<br>
+</header>
 <body>
-    <h1>Application pour un capteur de luminosite</h1>
+
    
     <h2>Dernières mesures de lumière</h2>
 
-    <div id="luxGraph" style="width:80%; height:600px; margin: 20px auto;"></div>
+    <div id="luxGraph" style="width:80%; height:600px; margin: 0px auto;"></div>
    
     <?php
     try {
@@ -43,9 +49,9 @@
                 echo "<li>" . $row2['recorded_at'] . " - <strong>" . $row2['lux'] . " Lux</strong></li>";
 
                 if ( $row2['lux'] < 50 ){
-                    echo "Etat de led exterieur : <strong style='color:green;'> allume </strong><br><br>";
+                    echo "Etat de led extérieure : <strong style='color:green;'> allumée </strong><br><br>";
                 } else {
-                    echo "Etat de led exterieur : <strong style='color:red;'> eteinte </strong><br><br>";
+                    echo "Etat de led extérieure : <strong style='color:red;'> éteinte </strong><br><br>";
                 }
             }
             echo "</ul>";
@@ -92,4 +98,3 @@
 
 </body>
 </html>
-
