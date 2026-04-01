@@ -70,7 +70,7 @@ ul li strong {
 }
 
 strong[style*="color:green"] {
-    background-color: hsl(145, 80%, 86%);/*143, 63%, 93%*/
+    background-color: hsl(144, 80%, 90%);
     padding: 0px 8px;
     border-radius: 5px;
 }
