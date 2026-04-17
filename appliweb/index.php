@@ -16,7 +16,6 @@
 <br>
 </header>
 <body>
-
    
     <h2>Dernières mesures de lumière</h2>
 
