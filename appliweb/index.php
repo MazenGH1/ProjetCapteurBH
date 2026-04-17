@@ -100,42 +100,40 @@
 
     ?>
 
-    <script>
-        
-        const abbsiceX = <?php echo json_encode($temps ?? []); ?>;
-        const abbsiceY = <?php echo json_encode($valeurs ?? []); ?>;
-
+<script>
+    const abbsiceX = <?php echo json_encode($temps ?? []); ?>;
+    const abbsiceY = <?php echo json_encode($valeurs ?? []); ?>;
     
-        const values = abbsiceY.map(Number);
-        const sorted = [...values].sort((a, b) => a - b);
-        const index90 = Math.floor(sorted.length * 0.9);
-        let maxi = sorted[index90];
+    const values = abbsiceY.map(Number);
 
-        if (!maxi || maxi < 10) {
-            maxi = 300;
+ 
+    let maxi = Math.max(...values);
+
+    if (!maxi || maxi < 10) {
+        maxi = 300;
+    }
+
+    let yMax = maxi * 1.15;
+
+    const data = [{
+        x: abbsiceX,
+        y: values,
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: { color: 'red', width: 3 }
+    }];
+
+    const layout = {
+        title: 'Luminosité (Lux) en temps réel',
+        xaxis: { title: 'Heure' },
+        yaxis: { 
+            title: 'Valeur Lux',
+            range: [0, yMax]
         }
+    };
 
-        let yMax = maxi * 1.1;
-
-        const data = [{
-            x: abbsiceX,
-            y: values,
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: { color: 'red', width: 5 }
-        }];
-
-        const layout = {
-            title: 'Luminosité (Lux) en temps réel',
-            xaxis: { title: 'Heure' },
-            yaxis: { 
-                title: 'Valeur Lux',
-                range: [0, yMax]
-            }
-        };
-
-        Plotly.newPlot('luxGraph', data, layout);
-    </script>
+    Plotly.newPlot('luxGraph', data, layout);
+</script>
 
 </body>
 
