@@ -12,7 +12,7 @@
 
 <header>
 <br>
-<h1>Application pour un capteur de Luminosité</h1>
+<h1>Application pour un capteur de Luminosité</h1>   
 <br>
 </header>
 <body>
@@ -24,13 +24,13 @@
    
     <?php
     try {
-        $dbh = new PDO('mysql:dbname=capteurbh1750;host=localhost;charset=utf8', 'root', '');
+        $dbh = new PDO('mysql:dbname=capteurbh1750;host=localhost;charset=utf8', 'root', '');   // connexion a la db 
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        
   
-        $stmt = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 20");
+        $stmt = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 20");   // valeurs principale pour l affchage du graph  + calcul moyen min max...
 
-        $stmt2 = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 1");
+        $stmt2 = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 1");   // juste pour afficher 1 valeur dans le html
 
         $readings = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $readings2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
@@ -46,36 +46,36 @@
 
             echo "<ul>";
             foreach ($readings2 as $row2) {
-                echo "<li>" . $row2['recorded_at'] . " - <strong>" . $row2['lux'] . " Lux</strong></li>";
+                echo "<li>" . $row2['recorded_at'] . " - <strong>" . $row2['lux'] . " Lux</strong></li>";    // affichage de la derniere valeur avec sa date
                 
-
-                if ( $row2['lux'] < 50 ){
+                if ( $row2['lux'] < 50 ){                           // dans le script python on a mit une condition pour que la led extern s allume si la valeur du lux devient < 50 donc on indique ici sur le site elle est allume ou pas
                     echo "Etat de led extérieure : <strong style='color:green;'> allumée </strong><br><br>";
                 } else {
                     echo "Etat de led extérieure : <strong style='color:red;'> éteinte </strong><br><br>";
                 }
             }
 
-        $val = array_column($readings, 'lux');
-        $datss= array_column($readings, 'recorded_at');
+        $val = array_column($readings, 'lux');  // tableau qui aura les valeurs du lux
+        $datss= array_column($readings, 'recorded_at');    // tableau qui aura les datetime (date+heur)
 
-        $maxi=max($val);
-        $indice_de_max = array_search($maxi, $val);
+        $maxi=max($val); //utilisation de max de php pour l afficher apres
+        $indice_de_max = array_search($maxi, $val);       //extraction de son indice pour trouver la date associer a la val max
         $date_max = $readings[$indice_de_max]['recorded_at'];
 
-        $mini=min($val);
+        $mini=min($val);      // meme chose 
         $indice_de_min = array_search($mini, $val);
         $date_min = $readings[$indice_de_min]['recorded_at'];
         
-        $moy= array_sum($val) / count($val);
+        $moy= array_sum($val) / count($val);    // valeur moyenne , array_sum de php fait la somme et count de php fait le nombre d elements
 
-        $prem=reset($datss);
-        $h1=date('H:i:s',strtotime($prem));
+        $prem=reset($datss);   // vue aue dans le sel on a fait un ORDER BY recorded_at DESC LIMIT 20 le premier element du tableau sera la date la plus recente donc la fin 
+        $h1=date('H:i:s',strtotime($prem)); // on veut juste l heur pas la date
 
-        $dernier=end($datss);
+        $dernier=end($datss); // ici le derniere element du tableau sera la date moins recente donc le debut
         $h2=date('H:i:s',strtotime($dernier));
 
 
+        //affichage des stats
         echo "Valeur maximale sur les 20 dernieres mesures <strong> ".$maxi."</strong>"." enregistré à: "."<strong> ".$date_max."</strong>"."<br/>";
         echo "Valeur minimale sur les 20 dernieres mesures <strong> ".$mini."</strong>"." enregistré à: "."<strong> ".$date_min."</strong>"."<br/>";
         echo "Valeur moyenne sur les 20 dernieres mesures <strong> ".$moy."</strong>"." enregistré entre: "."<strong>".$h2."</strong>"." et "."<strong>".$h1."</strong>" ."<br/>";
