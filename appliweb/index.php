@@ -69,7 +69,7 @@
         
         $moy= array_sum($val) / count($val);    // valeur moyenne , array_sum de php fait la somme et count de php fait le nombre d elements
 
-        $prem=reset($datss);   // vue aue dans le sel on a fait un ORDER BY recorded_at DESC LIMIT 20 le premier element du tableau sera la date la plus recente donc la fin 
+        $prem=reset($datss);   // vue que dans le sql on a fait un ORDER BY recorded_at DESC LIMIT 20 le premier element du tableau sera la date la plus recente donc la fin 
         $h1=date('H:i:s',strtotime($prem)); // on veut juste l heur pas la date
 
         $dernier=end($datss); // ici le derniere element du tableau sera la date moins recente donc le debut
