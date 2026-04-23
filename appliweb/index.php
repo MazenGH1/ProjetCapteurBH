@@ -21,7 +21,7 @@
    
     <h2>Dernières mesures de lumière</h2>
 
-    <div id="luxGraph" style="width:80%; height:600px; margin: 0px auto;"></div>
+    <div id="luxGraph" style="width:80%; height:600px; margin: 0px auto;"></div>  <!-- le graph sera ici --> 
    
     <?php
     try {
@@ -29,7 +29,7 @@
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        
   
-        $stmt = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 20");   // valeurs principale pour l affchage du graph  + calcul moyen min max...
+        $stmt = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 20");   // 20 derniere valeurs principale pour l affchage du graph  + calcul moyen min max...
 
         $stmt2 = $dbh->query("SELECT lux, recorded_at FROM lux_readings ORDER BY recorded_at DESC LIMIT 1");   // juste pour afficher 1 valeur dans le html
 
@@ -85,8 +85,9 @@
             
             echo "</ul>";
 
-         
+            //Remplissage des listes pour le graphique Plotly
             foreach ($readings_for_graph as $row) {
+                // On extrait uniquement l'heure (H:i:s)
                 $temps[] = date("H:i:s", strtotime($row['recorded_at']));
                 $valeurs[] = $row['lux'];
             }
@@ -102,20 +103,25 @@
     ?>
 
 <script>
+     // Importation des données depuis PHP vers JavaScript
     const abbsiceX = <?php echo json_encode($temps ?? []); ?>;
     const abbsiceY = <?php echo json_encode($valeurs ?? []); ?>;
     
+    //forcer la conversion des valeurs en nombres
     const values = abbsiceY.map(Number);
 
- 
+    //Calcul dynamique du plafond de l'axe y
     let maxi = Math.max(...values);
 
+    // Si le capteur est dans le noir complet ou qu'il y a un bug, on force un plafond a 300
     if (!maxi || maxi < 10) {
         maxi = 300;
     }
 
+    // marge de 15% au-dessus de la valeur max 
     let yMax = maxi * 1.15;
 
+    // configuration de la ligne et des points
     const data = [{
         x: abbsiceX,
         y: values,
@@ -124,15 +130,17 @@
         line: { color: 'red', width: 3 }
     }];
 
+    // Configuration de la mise en page (titres + axes)
     const layout = {
         title: 'Luminosité (Lux) en temps réel',
         xaxis: { title: 'Heure' },
         yaxis: { 
             title: 'Valeur Lux',
-            range: [0, yMax]
+            range: [0, yMax]   // commence de 0 avec un plafond dynamique
         }
     };
 
+    // Dessin du graphique dans la balise div 'luxGraph'
     Plotly.newPlot('luxGraph', data, layout);
 </script>
 
