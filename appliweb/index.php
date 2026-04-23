@@ -16,6 +16,8 @@
 <br>
 </header>
 <body>
+    
+    <img src="../images/20260417_105850.jpg" alt="Mesure de lumière" style="display:block; margin:20px auto; max-width:600px;">
    
     <h2>Dernières mesures de lumière</h2>
 
