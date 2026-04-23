@@ -2,7 +2,7 @@
 
 import math
 import time
-from machine import I2C, Pin  # <-- This is the missing line that fixes your error!
+from machine import I2C, Pin  
 from micropython import const
 from utime import sleep_ms
 import network
