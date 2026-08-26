@@ -1,19 +1,19 @@
-# 💡 IoT Light Sensor Dashboard (Raspberry Pi Pico W & BH1750)
+# 💡 Tableau de Bord pour Capteur de Lumière IoT (Raspberry Pi Pico W & BH1750)
 
-## 📖 Overview
-This project is an end-to-end IoT (Internet of Things) solution that measures ambient light levels, sends the data over Wi-Fi to a local server, and visualizes it in real-time on a web dashboard. 
+## 📖 Présentation
+Ce projet est une solution IoT (Internet des Objets) complète qui mesure la luminosité ambiante, envoie les données via Wi-Fi à un serveur local, et les affiche en temps réel sur une interface web.
 
-## 🚀 Features
-* **Real-Time Data:** Reads light levels (Lux) using the BH1750 I2C sensor.
-* **Wi-Fi Connectivity:** The Raspberry Pi Pico W sends data directly to a local Apache server via HTTP GET requests.
-* **Data Storage:** Archives all readings securely in a MySQL database.
-* **Interactive Dashboard:** Visualizes the last 20 readings using **Plotly.js**, calculating the max, min, and average values automatically.
-* **Hardware Sync:** An external LED triggers when the light drops below 50 Lux, and its status is mirrored on the web dashboard.
+## 🚀 Fonctionnalités
+* **Données en temps réel :** Lecture de la luminosité (en Lux) grâce au capteur I2C BH1750.
+* **Connectivité Wi-Fi :** Le Raspberry Pi Pico W envoie les données directement à un serveur web local Apache via des requêtes HTTP GET.
+* **Stockage des données :** Archivage sécurisé de toutes les mesures dans une base de données MySQL.
+* **Interface interactive :** Affichage des 20 dernières mesures avec **Plotly.js**, et calcul automatique des valeurs max, min et de la moyenne.
+* **Synchronisation Matérielle :** Une LED externe s'allume physiquement lorsque la lumière passe sous les 50 Lux, et son état est reflété sur l'interface web.
 
-## 🛠️ Tech Stack
-* **Hardware:** Raspberry Pi Pico W, BH1750 Light Sensor, LED, Breadboard
-* **Microcontroller:** MicroPython (`machine.I2C`, `network`, `urequests`)
-* **Backend:** PHP (PDO), Apache Web Server (XAMPP)
-* **Database:** MySQL
-* **Frontend:** HTML, CSS, JavaScript (Plotly.js)
+## 🛠️ Technologies Utilisées
+* **Matériel :** Raspberry Pi Pico W, Capteur de lumière BH1750, LED, Breadboard
+* **Microcontrôleur :** MicroPython (`machine.I2C`, `network`, `urequests`)
+* **Backend :** PHP (PDO), Serveur Web Apache (XAMPP)
+* **Base de données :** MySQL
+* **Frontend :** HTML, CSS, JavaScript (Plotly.js)
 
